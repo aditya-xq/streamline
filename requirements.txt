@@ -1,0 +1,6 @@
+Flask
+python-dotenv
+pytube
+moviepy
+Werkzeug
+logging

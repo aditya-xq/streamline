@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined YouTube to MP3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Light theme styles */
+        body {
+            background-color: #f0f6fc; /* Light background for light mode */
+            color: #1a202c; /* Darker text color for better contrast */
+        }
+
+        input, button {
+            background-color: #f0f6fc;
+            color: #1a202c; /* Dark text color for visibility */
+            border-color: #cbd5e1; /* Lighter border color */
+        }
+
+        input:focus, button:focus {
+            border-color: #4f46e5; /* Focus color for light mode */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.5); /* Adding a soft glow effect */
+        }
+
+        button:hover {
+            background-color: #e9ecef; /* Light hover effect for buttons */
+        }
+        /* Custom styles for dark mode */
+        .dark-theme {
+            background-color: #12151A; /* Slightly lighter dark background for better contrast */
+            color: #F0F6FC; /* Brighter text for better readability */
+        }
+
+        .dark-theme input, .dark-theme button {
+            background-color: #12151A;
+            color: #F0F6FC;
+            border: 1px solid #3B4252; /* Defined border to make elements stand out */
+        }
+
+        .dark-theme input:focus, .dark-theme button:focus {
+            border-color: #6366F1; /* Brighter focus color */
+            outline: none; /* Removing default focus outline */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Adding a soft glow effect */
+        }
+
+        .dark-theme button:hover {
+            background-color: #6366F1; /* Consistent hover effect */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        /* Increased sizes for form elements */
+        .larger-form input, .larger-form button {
+            padding: 14px; /* Adjusted padding for better proportions */
+            font-size: 1rem; /* Adjusted font size for better readability */
+        }
+        /* Toggle Switch Style */
+        .toggle-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+        .toggle-switch input {
+            display: none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #6366F1;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body class="dark-theme p-10">
+    <div class="flex items-center justify-center mt-20">
+        <div class="w-full max-w-lg">
+            <!-- Toggle Dark Mode Switch -->
+            <div class="flex justify-center items-center mb-4">
+                <h1 class="text-4xl font-bold">Streamline Your Sound</h1>
+                <label class="toggle-switch ml-4">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <p class="text-xl text-gray-500 mb-6 text-center">Convert YouTube videos to MP3 effortlessly.</p>
+            <form action="" method="post" class="bg-gray-900 p-10 rounded-lg shadow-lg larger-form">
+                <div class="mb-5">
+                    <label for="video_url" class="block mb-2 text-xl font-medium text-gray-400">YouTube Video URL</label>
+                    <input type="url" name="video_url" id="video_url" required class="appearance-none rounded relative block w-full px-3 py-4 border-0 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-xl" placeholder="Enter video link here...">
+                </div>
+                <button type="submit" class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-xl font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Convert & Download
+                </button>
+                <!-- Note about conversion time -->
+                <p class="text-sm text-gray-400 mt-3 text-center">Conversion might take a few moments. Thank you for your patience.</p>
+            </form>
+        </div>
+    </div>
+    <script>
+        const toggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        toggle.addEventListener('change', function() {
+            body.classList.toggle('dark-theme');
+        });
+    </script>
+</body>
+</html>
