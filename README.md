@@ -1,4 +1,4 @@
-# 🎵 Streamline Your Sound: YouTube to MP3 in a Snap! 🚀
+# 🎵 Streamline Your Sound: YouTube to MP3 in a Snap!
 
 Welcome to the coolest corner of GitHub, where we take the magic of YouTube and turn it into sweet, sweet MP3 files for your listening pleasure. Forget those days of keeping a browser tab open just to listen to your favorite tunes or talks. Download once, and it's yours forever!
 
