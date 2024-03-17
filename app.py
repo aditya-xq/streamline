@@ -3,7 +3,8 @@ import os
 import logging
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-from download import download_youtube_audio
+from download import download_youtube_media
+from pytube.exceptions import PytubeError, RegexMatchError, VideoUnavailable
 
 load_dotenv()  # Load environment variables from a .env file
 
@@ -20,17 +21,25 @@ app.config['DOWNLOAD_FOLDER'] = os.path.abspath(DOWNLOAD_FOLDER)
 def index():
     if request.method == 'POST':
         video_url = request.form.get('video_url')
+        download_type = request.form.get('download_type', 'audio')  # Default to 'audio' if not specified
+        
         if video_url:
             try:
-                file_path = download_youtube_audio(video_url, app.config['DOWNLOAD_FOLDER'])
+                # Pass the download_type to the download function
+                file_path = download_youtube_media(video_url, app.config['DOWNLOAD_FOLDER'], download_type=download_type)
                 filename = os.path.basename(file_path)
-                # safe_filename = secure_filename(filename)
-                # logging.info(f"File to download: {filename}, after secure_filename: {safe_filename}")
                 return redirect(url_for('download_file', filename=filename))
+            except VideoUnavailable:
+                error_message = "This video is unavailable. Please check the URL and try again."
+            except RegexMatchError:
+                error_message = "Failed to extract video data. Please check the URL and try again."
+            except PytubeError as e:
+                error_message = f"A Pytube error occurred: {str(e)}. Please try again later."
             except Exception as e:
-                logging.error(f"Error downloading/converting video: {e}")
-                error_message = "Failed to download and convert the video. Please try again later."
-                return render_template('index.html', error=error_message)
+                logging.error(f"Unhandled error downloading/converting video: {e}")
+                error_message = "An unexpected error occurred. Please try again later."
+
+            return render_template('index.html', error=error_message)
     return render_template('index.html')
 
 @app.route('/downloads/<filename>')
