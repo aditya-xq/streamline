@@ -6,54 +6,51 @@
     <title>Streamlined YouTube to MP3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Light theme styles */
-        body {
-            background-color: #f0f6fc; /* Light background for light mode */
-            color: #1a202c; /* Darker text color for better contrast */
+        :root {
+            --background-color: #FFFFFF;
+            --text-color: #333333;
+            --border-color: #DDE2E5;
+            --focus-border-color: #007BFF;
+            --focus-shadow-color: rgba(0, 123, 255, 0.5);
+            --hover-background-color-light: #F0F0F0; /* Light theme button hover */
         }
 
-        input, button {
-            background-color: #f0f6fc;
-            color: #1a202c; /* Dark text color for visibility */
-            border-color: #cbd5e1; /* Lighter border color */
+        /* Dark theme specific variables */
+        .dark-theme {
+            --background-color: #1A1E23;
+            --text-color: #E4E6E9;
+            --border-color: #2D333B;
+            --focus-border-color: #1B9FFF;
+            --focus-shadow-color: rgba(27, 159, 255, 0.5);
+            --hover-background-color-dark: #2A2F37; /* Dark theme button hover */
+        }
+
+        body, input, button {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border-color: var(--border-color);
         }
 
         input:focus, button:focus {
-            border-color: #4f46e5; /* Focus color for light mode */
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.5); /* Adding a soft glow effect */
+            border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color);
         }
 
         button:hover {
-            background-color: #e9ecef; /* Light hover effect for buttons */
-        }
-        /* Custom styles for dark mode */
-        .dark-theme {
-            background-color: #12151A; /* Slightly lighter dark background for better contrast */
-            color: #F0F6FC; /* Brighter text for better readability */
-        }
-
-        .dark-theme input, .dark-theme button {
-            background-color: #12151A;
-            color: #F0F6FC;
-            border: 1px solid #3B4252; /* Defined border to make elements stand out */
-        }
-
-        .dark-theme input:focus, .dark-theme button:focus {
-            border-color: #6366F1; /* Brighter focus color */
-            outline: none; /* Removing default focus outline */
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Adding a soft glow effect */
+            background-color: var(--hover-background-color-light);
         }
 
         .dark-theme button:hover {
-            background-color: #6366F1; /* Consistent hover effect */
+            background-color: var(--hover-background-color-dark);
             transition: background-color 0.3s; /* Smooth transition for hover effect */
         }
 
-        /* Increased sizes for form elements */
+        /* Additional styles for structure and layout */
         .larger-form input, .larger-form button {
             padding: 14px; /* Adjusted padding for better proportions */
             font-size: 1rem; /* Adjusted font size for better readability */
         }
+
         /* Toggle Switch Style */
         .toggle-switch {
             display: inline-block;
@@ -92,8 +89,68 @@
         input:checked + .slider:before {
             transform: translateX(26px);
         }
+        .progress-bar-container {
+            padding: 15px;
+            border-radius: 8px; /* Rounded corners for the container */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            text-align: center; /* Center align the text */
+        }
+
+        .progress-label {
+            color: #1a202c; /* Darker text color for contrast */
+            margin-bottom: 10px; /* Space between label and progress bar */
+        }
+
+        .progress {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 24px; /* Taller progress bar for better visibility */
+            border-radius: 10px; /* Rounded corners for the progress bar */
+            color: #4f46e5; /* Progress bar color (does not work in all browsers) */
+            background-color: #e2e8f0; /* Lighter background color for the unfilled part */
+        }
+
+        .progress-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center; /* Center the text vertically */
+        }
+
+        .progress-percentage {
+            position: absolute;
+            right: 0;
+            margin-right: 10px; /* Adjust as needed */
+            color: #1a202c; /* Color that is visible against the progress bar */
+            font-weight: bold;
+        }
+
+        .completion-message {
+            color: #38a169; /* Green color */
+            margin-top: 10px; /* Space above the message */
+            font-size: 1rem; /* Appropriate text size */
+            font-weight: bold; /* Make it bold */
+        }
+
+        .progress::-webkit-progress-bar {
+            background-color: #e2e8f0; /* Lighter background color for the unfilled part */
+            border-radius: 10px; /* Rounded corners for the progress bar */
+        }
+
+        .progress::-webkit-progress-value {
+            background-color: #4f46e5; /* Primary color for the filled part */
+            border-radius: 10px; /* Rounded corners for the filled part */
+            background-image: linear-gradient(to right, #667eea, #764ba2); /* Gradient for the filled part */
+        }
+
+        .progress::-moz-progress-bar {
+            background-color: #4f46e5; /* Primary color for the filled part */
+            border-radius: 10px; /* Rounded corners for the filled part */
+            background-image: linear-gradient(to right, #667eea, #764ba2); /* Gradient for the filled part */
+        }
     </style>
 </head>
+
 <body class="dark-theme p-10">
     <div class="flex items-center justify-center mt-20">
         <div class="w-full max-w-lg">
@@ -106,14 +163,45 @@
                 </label>
             </div>
             <p class="text-xl text-gray-500 mb-6 text-center">Convert YouTube videos to MP3 effortlessly.</p>
-            <form action="" method="post" class="bg-gray-900 p-10 rounded-lg shadow-lg larger-form">
+            {% if error %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <div class="flex justify-between">
+                        <div class="pr-10"> <!-- Adjust right padding to ensure text doesn't overlap with the close button -->
+                            <strong class="font-bold">Error!</strong>
+                            <span class="block sm:inline">{{ error }}</span>
+                        </div>
+                        <button class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.parentElement.classList.add('hidden');">
+                            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.196 7.349 13.85a1.2 1.2 0 1 1-1.697-1.697L8.196 10 5.651 7.349A1.2 1.2 0 1 1 7.349 5.651L10 8.196l2.651-2.545a1.2 1.2 0 1 1 1.697 1.697L11.804 10l2.544 2.651a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}           
+            <form id="convertForm" action="" method="post" class="bg-gray-900 p-10 rounded-lg shadow-lg larger-form">
                 <div class="mb-5">
                     <label for="video_url" class="block mb-2 text-xl font-medium text-gray-400">YouTube Video URL</label>
-                    <input type="url" name="video_url" id="video_url" required class="appearance-none rounded relative block w-full px-3 py-4 border-0 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-xl" placeholder="Enter video link or ineffable plan here...">
+                    <input type="url" name="video_url" id="video_url" required class="appearance-none rounded relative block w-full px-3 py-4 border-0 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-xl" placeholder="Enter video link here...">
+                </div>
+                <div class="mb-5">
+                    <span class="block mb-2 text-xl font-medium text-gray-400">Download Type</span>
+                    <label for="download_type_audio" class="inline-flex items-center mr-6">
+                        <input type="radio" name="download_type" id="download_type_audio" value="audio" checked class="form-radio h-5 w-5 text-blue-600"><span class="ml-2 text-gray-300 text-xl">Audio</span>
+                    </label>
+                    <label for="download_type_video" class="inline-flex items-center">
+                        <input type="radio" name="download_type" id="download_type_video" value="video" class="form-radio h-5 w-5 text-blue-600"><span class="ml-2 text-gray-300 text-xl">Video</span>
+                    </label>
                 </div>
                 <button type="submit" class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-xl font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     Convert & Download
                 </button>
+                <!-- Progress Bar, initially hidden -->
+                <div id="progressBarContainer" class="progress-bar-container m-4" style="display: none;">
+                    <label for="progressBar" class="progress-label block mb-2 text-xl font-medium text-gray-400">Fake Progress :P (for aesthetics)</label>
+                    <div class="progress-wrapper">
+                        <progress id="progressBar" value="0" max="100" class="progress"></progress>
+                        <span id="progressPercentage" class="progress-percentage">0%</span> <!-- Percentage text -->
+                    </div>
+                    <div id="completionMessage" class="completion-message" style="display: none;"></div>
+                </div>                
                 <!-- Note about conversion time -->
                 <p class="text-sm text-gray-400 mt-3 text-center">Conversion may take a moment - not as long as averting Armageddon, but we appreciate your celestial patience.</p>
             </form>
@@ -124,7 +212,40 @@
         const body = document.body;
         toggle.addEventListener('change', function() {
             body.classList.toggle('dark-theme');
+            body.style.transition = "all 0.5s"; // Add transition
         });
-    </script>
+    
+        document.getElementById('convertForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const progressBarContainer = document.getElementById('progressBarContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercentage = document.getElementById('progressPercentage');
+            const completionMessage = document.getElementById('completionMessage');
+            
+            progressBarContainer.style.display = ''; // Show the progress bar container
+            completionMessage.style.display = 'none'; // Hide the completion message
+            let progressValue = 0;
+            progressBar.value = progressValue;
+            progressPercentage.textContent = `${progressValue}%`; // Initial percentage
+
+            document.getElementById('convertForm').submit();
+    
+            // Simulate progress (replace this with actual progress updates if possible)
+            const interval = setInterval(() => {
+                progressValue += 2;
+                progressBar.value = progressValue;
+                progressPercentage.textContent = `${progressValue}%`; // Update percentage text
+    
+                if (progressValue >= 100) {
+                    clearInterval(interval);
+                    completionMessage.style.display = ''; // Show completion message
+                    completionMessage.innerHTML = '<strong>Completed!</strong>';
+                }
+            }, 60); // Update interval
+    
+            // To actually submit the form and handle file conversion, you might need AJAX or form submission here
+            // This example simply demonstrates progress bar updating
+        };
+    </script>    
 </body>
 </html>
