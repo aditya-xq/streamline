@@ -1,6 +1,6 @@
-# 🎵 Streamline Your Sound: YouTube to MP3 in a Snap!
+# 🎵 Streamline Your Media: YouTube to MP3 or MP4 in a Snap!
 
-Welcome to the coolest corner of GitHub, where we take the magic of YouTube and turn it into sweet, sweet MP3 files for your listening pleasure. Forget those days of keeping a browser tab open just to listen to your favorite tunes or talks. Download once, and it's yours forever!
+Welcome to the coolest corner of GitHub, where we take the magic of YouTube and turn it into sweet, sweet MP3 or MP4 files for your listening pleasure. Forget those days of keeping a browser tab open just to listen to your favorite tunes or talks. Download once, and it's yours forever!
 
 ## What is This Sorcery? 🧙‍♂️
 
@@ -15,16 +15,17 @@ In the beginning, there was chaos. And then came the internet, brimming with end
 
 ## Summoning the Converter 📣
 
-To transform that video into an MP3, follow these mystical steps:
+To transform that video into an MP3/MP4, follow these mystical steps:
 
 1. **Start the app**: `python app.py` and visit `http://localhost:5000` on your favorite browser.
 2. **Enter the YouTube URL**: Paste the video link into the cauldron's... um, the webpage's input field.
-3. **Hit 'Convert & Download'**: And watch the magic unfold. 🔮
+3. **Choose the download type**: Audio or Video.
+4. **Hit 'Convert & Download'**: And watch the magic unfold. 🔮
 
 ## Features 🌟
 
 - **User-Friendly Web Interface**: Who says magic can't be modern? Our Flask app makes converting videos a breeze.
-- **High-Quality Audio**: Get the best sound, short of having the artist perform in your living room.
+- **High-Quality Audio/Video**: Get the best media, short of having the artist perform in your living room.
 - **Absolutely Free**: Like the best things in life, our converter doesn't cost a dime or a drachma.
 
 ## Contribute to the Magic 🌈
