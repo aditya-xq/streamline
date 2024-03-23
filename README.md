@@ -8,10 +8,42 @@ In the beginning, there was chaos. And then came the internet, brimming with end
 
 ## How to Get Started 🏁
 
-1. **Clone this repository**: `git clone https://github.com/aditya-xq/streamline.git`
-2. **Navigate into the folder**: `cd streamline`
-3. **Install the necessary potions... ahem, I mean dependencies**: Check out our `requirements.txt` or simply wave your magic wand (or, you know, run `pip install -r requirements.txt`).
-4. **Set up your environment**: Rename `.env.example` to `.env` and fill it with your secrets (not really, just your desired download folder).
+To get your environment set up and running with the Streamline project, please follow these clear and detailed steps:
+
+1. **Clone the Repository**: Begin by cloning the repository to your local machine. Open your terminal (or anaconda prompt) and execute the following command:
+   ```
+   git clone https://github.com/aditya-xq/streamline.git
+   ```
+   This command downloads all the project files to a folder named `streamline` on your computer.
+
+2. **Navigate to the Project Folder**: Once cloning is complete, move into the project directory by running:
+   ```
+   cd streamline
+   ```
+   This step is essential as all subsequent commands need to be run from within the project's root directory.
+
+3. **Create a New Anaconda Environment**: Before installing the project dependencies, it's a good practice to create a new Anaconda environment. This helps in managing packages and avoiding conflicts between project requirements. Use the following command to create a new environment named `streamline_env` (you can choose a different name if you prefer):
+   ```
+   conda create --name streamline_env python=3.12
+   ```
+   After creation, activate the new environment with:
+   ```
+   conda activate streamline_env
+   ```
+
+4. **Install Project Dependencies**: With your Anaconda environment activated, install the necessary project dependencies by running:
+   ```
+   pip install -r requirements.txt
+   ```
+   This command reads the `requirements.txt` file in the project directory and installs all the specified Python packages.
+
+5. **Set Up Your Environment Variables**: The project uses an environment file (`.env`) to manage configuration variables such as your desired download folder. Start by renaming the provided example file:
+   ```
+   mv .env.example .env
+   ```
+   Then, open the `.env` file in your favorite text editor and fill in the necessary details. The instructions within the file will guide you on what values are needed.
+
+By following these steps, your project environment should be ready for development or usage, with all dependencies installed within a separate Anaconda environment to maintain a clean workspace.
 
 ## Summoning the Converter 📣
 
